@@ -20,5 +20,13 @@ namespace TestAuto.Infrastructure
             services.AddDbContext<ApplicationContext>(
                 options => options.UseSqlServer(connectionString));
         }
+
+        public static void AddPostgreSQL(
+            this IServiceCollection services,
+            string connectionString)
+        {
+            services.AddDbContext<ApplicationContext>(
+                options => options.UseNpgsql(connectionString));
+        }
     }
 }

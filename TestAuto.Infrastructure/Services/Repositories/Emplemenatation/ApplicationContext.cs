@@ -13,8 +13,10 @@ namespace TestAuto.Infrastructure.Services.Repositories.Emplemenatation
         public ApplicationContext(DbContextOptions options) 
             : base(options)
         {
-            //Database.EnsureDeleted();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             Database.EnsureCreated();
+            //Database.EnsureDeleted();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
-builder.Services.AddMSSQLServer(builder.Configuration["ConnectionString:MSSQL"]!);
+builder.Services.AddPostgreSQL(builder.Configuration["ConnectionStrings:PostgreSQL"]!);
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
