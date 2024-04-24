@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
 using TestAuto.Application.CQRS.Coins.Queries.GetAllCoinByDispenser;
 using TestAuto.Application.CQRS.Drinks.Queries.GetDrinkById;
 using TestAuto.Application.Exeptions;
 using TestAuto.Application.Services.Abstraction;
 using TestAuto.Domain.Models;
+using TestAuto.Infrastructure.Exceptions;
 
 namespace TestAuto.Application.Services.Emplementation
 {
@@ -16,7 +18,7 @@ namespace TestAuto.Application.Services.Emplementation
             _mediator = mediator;
         }
 
-        public async Task<IEnumerable<Coin>> PayDrinkAndChangeReturn(int drinkId, int balance)
+        public async Task<IEnumerable<int>> PayDrinkAndChangeReturn(int drinkId, int balance)
         {
             var drink = await _mediator.Send(new GetDrinkByIdRequest(drinkId));
 
@@ -26,26 +28,27 @@ namespace TestAuto.Application.Services.Emplementation
                 throw new PaymentFailedException("недостаточно средств");
             else
             {
+                await _mediator.Send(new DecrementCountCoinCommand(drinkId));
                 var changeValue = balance - drink.Price;
-                return CalculateChange((int)changeValue);
+                return await CalculateChangeAsync((int)changeValue);
             }
         }
 
-        private async IEnumerable<Coin> CalculateChange(int changeValue,int dispenserId = 1)
+        private async Task<IEnumerable<int>> CalculateChangeAsync(int changeValue,int dispenserId = 1)
         {
             var coinsDispenser = await _mediator.Send(new GetAllCoinByDispenserRequest(dispenserId));
-            var coinsChange = new List<Coin>();
+            var coinsChange = new List<int>();
 
             while (changeValue != 0)
             {
-                Coin? coin = null;
+                Coin coin = coinsDispenser.FirstOrDefault(c=>c.Count > 0) 
+                    ?? throw new EntityNotFoundException("coin not found");
+                changeValue -= coin.Denomination;
 
-                if (changeValue >= 10)
-                    coin = coinsDispenser.FirstOrDefault(c => c.Denomination == 10)!;
-                else if (changeValue < 10 && changeValue >= 5)
-                    coin = coinsDispenser.FirstOrDefault(c => c.Denomination == 5)!;
-                else if
+                coinsChange.Add(coin.Denomination);
             }
+
+            return coinsChange;
         }
     }
 }

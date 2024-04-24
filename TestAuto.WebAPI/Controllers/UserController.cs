@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
 using TestAuto.Application.CQRS.Coins.Queries.GetCointById;
-using TestAuto.Application.CQRS.Drinks.Queries.GetDrinkById;
+using TestAuto.Application.Services.Abstraction;
 
 namespace TestAuto.WebAPI.Controllers
 {
@@ -11,10 +10,14 @@ namespace TestAuto.WebAPI.Controllers
     public class UserController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly IAccountService _accountService;
 
-        public UserController(IMediator mediator)
+        public UserController(
+            IMediator mediator, 
+            IAccountService accountService)
         {
             _mediator = mediator;
+            _accountService = accountService;
         }
 
         [HttpGet("deposit")]
@@ -23,27 +26,27 @@ namespace TestAuto.WebAPI.Controllers
             await _mediator.Send(new DecrementCountCoinCommand(coinId));
             var coin = await   _mediator.Send(new GetCoinByIdRequest(coinId));
 
-            if (HttpContext.Session.Keys.Contains("amount"))
+            if (HttpContext.Session.Keys.Contains("balance"))
             {
-                var amountCoins = HttpContext.Session.GetInt32("amount");
+                var amountCoins = HttpContext.Session.GetInt32("balance");
                 amountCoins += coin.Denomination;
-                HttpContext.Session.SetString("amount", amountCoins.ToString()!);
+                HttpContext.Session.SetString("balance", amountCoins.ToString()!);
                 return Ok();
             }
             else
             {
                 var amountCoins = coin.Denomination;
-                HttpContext.Session.SetString("amount", amountCoins.ToString()!);
+                HttpContext.Session.SetString("balance", amountCoins.ToString()!);
                 return Ok();
             }
         }
 
         [HttpGet("balance")]
-        public IActionResult GetBAlance()
+        public IActionResult GetBalance()
         {
             int balance = 0;
-            if (HttpContext.Session.Keys.Contains("amount"))
-                balance = (int)HttpContext.Session.GetInt32("amount")!;
+            if (HttpContext.Session.Keys.Contains("balance"))
+                balance = (int)HttpContext.Session.GetInt32("balance")!;
 
             return Ok(balance);
             
@@ -52,8 +55,14 @@ namespace TestAuto.WebAPI.Controllers
         [HttpGet("pay")]
         public async Task<IActionResult> PayDrink([FromQuery] int drinkId)
         {
-
-            
+            if (HttpContext.Session.Keys.Contains("balance"))
+            {
+                var balance = (int)HttpContext.Session.GetInt32("balance")!;
+                var changeCoin = await _accountService.PayDrinkAndChangeReturn(drinkId, balance);
+                return Ok(new {change = changeCoin, drinkid = drinkId});
+            }
+            else
+                return BadRequest(new { message = "пополните баланс" });
         }
     }
 }
