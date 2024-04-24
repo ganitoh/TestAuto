@@ -2,9 +2,8 @@
 using System.Reflection;
 using TestAuto.Application.CQRS;
 using TestAuto.Application.CQRS.Behaviors;
-using TestAuto.Application.CQRS.Drinks.Commands.CreateDrink;
-using TestAuto.Application.CQRS.Drinks.Commands.DeleteDrink;
-using TestAuto.Application.CQRS.Drinks.Commands.UpdateDrink;
+using TestAuto.Application.Services.Abstraction;
+using TestAuto.Application.Services.Emplementation;
 
 namespace TestAuto.Application
 {
@@ -19,6 +18,8 @@ namespace TestAuto.Application
             });
 
             services.AddAutoMapper(typeof(CQRSMapProfile));
+
+            services.AddScoped<IAccountService, AccountService>();
         }
 
     }

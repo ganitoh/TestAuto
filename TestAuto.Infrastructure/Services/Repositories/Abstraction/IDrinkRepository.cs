@@ -8,5 +8,7 @@ namespace TestAuto.Infrastructure.Services.Repositories.Abstraction
         Task UpdateDrinkCount(int drinkId, int count);
         Task UpdateDrinkCountIncrement(int drinkId);
         Task UpdateDrinkCountDecrement(int drinkId);
+        Task<IEnumerable<Drink>> GetAllDrinkByAmount(int dispenserId,int amount);
+        Task<IEnumerable<Drink>> GetAllEntity(int dispenserId);
     }
 }

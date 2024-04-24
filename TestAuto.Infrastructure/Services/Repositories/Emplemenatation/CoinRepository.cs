@@ -72,5 +72,14 @@ namespace TestAuto.Infrastructure.Services.Repositories.Emplemenatation
             coin.Count++;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Coin> GetCoinAsync(int coinId)
+        {
+            var coin = await _context.Coins.AsNoTracking().FirstOrDefaultAsync(c => c.Id == coinId);
+            if (coin is null)
+                throw new EntityNotFoundException("coin not found");
+
+            return coin;
+        }
     }
 }

@@ -12,9 +12,11 @@ namespace TestAuto.Application.CQRS.Coins.Command.IncrementCountCoin
             _coinRepository = coinRepository;
         }
 
-        public Task Handle(IncrementCountCoinCommand request, CancellationToken cancellationToken)
+        public async Task Handle(
+            IncrementCountCoinCommand request, 
+            CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _coinRepository.UpdateCoinCountIncrementAsync(request.Id);
         }
     }
 }

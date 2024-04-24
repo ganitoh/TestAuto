@@ -91,5 +91,25 @@ namespace TestAuto.Infrastructure.Services.Repositories.Emplemenatation
             drink.Count++;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Drink>> GetAllDrinkByAmount(int dispenserId, int amount)
+        {
+            var drinks = await _context.Drinks
+                .AsNoTracking()
+                .Where(d => d.DispenserId == dispenserId && d.Price <= amount)
+                .ToListAsync<Drink>() ?? [];
+
+            return drinks;
+
+        }
+
+        public async Task<IEnumerable<Drink>> GetAllEntity(int dispenserId)
+        {
+            var drinks = await _context.Drinks.AsNoTracking()
+                .Where(d => d.DispenserId == dispenserId)
+                .ToListAsync() ?? [];
+
+            return drinks;
+        }
     }
 }
