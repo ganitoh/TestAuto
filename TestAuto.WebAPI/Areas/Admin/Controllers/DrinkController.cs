@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestAuto.Application.CQRS.Drinks.Commands.CreateDrink;
 using TestAuto.Application.CQRS.Drinks.Commands.DeleteDrink;
 using TestAuto.Application.CQRS.Drinks.Commands.UpdateDrink;
+using TestAuto.WebAPI.Contracts;
 
 namespace TestAuto.WebAPI.Areas.Admin.Controllers
 {
@@ -18,9 +19,16 @@ namespace TestAuto.WebAPI.Areas.Admin.Controllers
         }
 
         [HttpPost("add/{token}")]
-        public async Task<IActionResult> AddDrink([FromBody] CreateDrinkComamnd command)
+        public async Task<IActionResult> AddDrink([FromForm] AddDrinkRequest request)
         {
-            await _mediator.Send(command);
+            var fullPathFile = $"{Directory.GetCurrentDirectory()}/wwwroot/img/{request.file.FileName}";
+            var relativePath = $"/img/{request.file.FileName}";
+
+            using FileStream stream = new FileStream(fullPathFile, FileMode.Create);
+            await request.file.CopyToAsync(stream);
+
+            await _mediator.Send(new CreateDrinkComamnd(
+                request.count,request.price,request.name,relativePath,request.dispenserId));
             return Ok();
         }
 

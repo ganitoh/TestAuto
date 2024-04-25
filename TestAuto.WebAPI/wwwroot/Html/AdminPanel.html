@@ -1,10 +1,116 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        select {
+            padding: 10px;
+        }
+
+        input[type="password"] {
+            width: calc(100% - 36px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-    <h2>Admin panel</h2>
+    <h1>Административная панель</h1>
+
+    <!-- Форма для управления ассортиментом напитков -->
+    <h2>Управление ассортиментом напитков</h2>
+    <form id="drinkForm">
+        <label for="drinkName">Название напитка:</label>
+        <input type="text" id="drinkName" name="drinkName" required><br>
+
+        <label for="drinkQuantity">Количество:</label>
+        <input type="number" id="drinkQuantity" name="drinkQuantity" required><br>
+
+        <label for="drinkPrice">Цена:</label>
+        <input type="number" id="drinkPrice" name="drinkPrice" required><br>
+
+        <label for="drinkImage">Изображение:</label>
+        <input type="file" id="drinkImage" name="drinkImage" accept="image/*"><br>
+
+        <button type="submit">Добавить напиток</button>
+    </form>
+
+    <!-- Форма для управления монетами в автомате -->
+    <h2>Управление монетами в автомате</h2>
+    <form id="coinForm">
+        <label for="coinType">Тип монеты:</label>
+        <select id="coinType" name="coinType">
+            <option value="1">1 рубль</option>
+            <option value="2">2 рубля</option>
+            <option value="5">5 рублей</option>
+            <option value="10">10 рублей</option>
+            <!-- Другие варианты монет -->
+        </select><br>
+
+        <label for="coinQuantity">Количество:</label>
+        <input type="number" id="coinQuantity" name="coinQuantity" required><br>
+
+        <label for="coinStatus">Статус:</label>
+        <select id="coinStatus" name="coinStatus">
+            <option value="active">Активная</option>
+            <option value="blocked">Заблокированная</option>
+        </select><br>
+
+        <button type="submit">Изменить монеты</button>
+    </form>
 </body>
-</html>

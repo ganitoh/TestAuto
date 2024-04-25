@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
+using TestAuto.Application.CQRS.Coins.Command.IncrementCountCoin;
 using TestAuto.Application.CQRS.Coins.Queries.GetAllCoinByDispenser;
 using TestAuto.Application.CQRS.Drinks.Queries.GetDrinkById;
 using TestAuto.Application.Exeptions;
@@ -39,13 +40,14 @@ namespace TestAuto.Application.Services.Emplementation
             var coinsDispenser = await _mediator.Send(new GetAllCoinByDispenserRequest(dispenserId));
             var coinsChange = new List<int>();
 
-            while (changeValue != 0)
+            while (changeValue > 0)
             {
                 Coin coin = coinsDispenser.FirstOrDefault(c=>c.Count > 0) 
                     ?? throw new EntityNotFoundException("coin not found");
                 changeValue -= coin.Denomination;
-
                 coinsChange.Add(coin.Denomination);
+
+                await _mediator.Send(new DecrementCountCoinCommand(coin.Id));
             }
 
             return coinsChange;

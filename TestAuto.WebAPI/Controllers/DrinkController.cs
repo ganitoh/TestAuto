@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 using TestAuto.Application.CQRS.Drinks.Queries.GetAllDrinksByAmount;
 using TestAuto.Application.CQRS.Drinks.Queries.GetAllDrinksByDispenser;
 

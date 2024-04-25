@@ -8,11 +8,11 @@ namespace TestAuto.WebAPI.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Route("admin/coin")]
-    public class CountController : Controller
+    public class CoinController : Controller
     {
         private readonly IMediator _mediator;
 
-        public CountController(IMediator mediator)
+        public CoinController(IMediator mediator)
         {
             _mediator = mediator;
         }

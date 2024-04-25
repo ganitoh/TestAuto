@@ -21,22 +21,20 @@ namespace TestAuto.WebAPI.Controllers
         }
 
         [HttpGet("deposit")]
-        public async Task<IActionResult> DepositCoin([FromQuery] int coinId)
+        public async Task<IActionResult> DepositCoin([FromQuery] int denominationCoin)
         {
-            await _mediator.Send(new DecrementCountCoinCommand(coinId));
-            var coin = await   _mediator.Send(new GetCoinByIdRequest(coinId));
+            await _mediator.Send(new DecrementCountCoinCommand(denominationCoin));
 
             if (HttpContext.Session.Keys.Contains("balance"))
             {
-                var amountCoins = HttpContext.Session.GetInt32("balance");
-                amountCoins += coin.Denomination;
+                var amountCoins = Convert.ToInt32(HttpContext.Session.GetString("balance"));
+                amountCoins += denominationCoin;
                 HttpContext.Session.SetString("balance", amountCoins.ToString()!);
                 return Ok();
             }
             else
             {
-                var amountCoins = coin.Denomination;
-                HttpContext.Session.SetString("balance", amountCoins.ToString()!);
+                HttpContext.Session.SetString("balance", denominationCoin.ToString()!);
                 return Ok();
             }
         }
@@ -46,9 +44,9 @@ namespace TestAuto.WebAPI.Controllers
         {
             int balance = 0;
             if (HttpContext.Session.Keys.Contains("balance"))
-                balance = (int)HttpContext.Session.GetInt32("balance")!;
+                balance = Convert.ToInt32(HttpContext.Session.GetString("balance")!);
 
-            return Ok(balance);
+            return Ok(new { balance = balance});
             
         }
 
@@ -57,7 +55,7 @@ namespace TestAuto.WebAPI.Controllers
         {
             if (HttpContext.Session.Keys.Contains("balance"))
             {
-                var balance = (int)HttpContext.Session.GetInt32("balance")!;
+                var balance = Convert.ToInt32(HttpContext.Session.GetString("balance"));
                 var changeCoin = await _accountService.PayDrinkAndChangeReturn(drinkId, balance);
                 return Ok(new {change = changeCoin, drinkid = drinkId});
             }

@@ -40,6 +40,7 @@ app.UseStaticFiles(new StaticFileOptions()
     FileProvider = new PhysicalFileProvider(
         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "html"))
 });
+app.UseStaticFiles();
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(name: "admin", pattern: "{area:exist}/{controller}/{action}/{token}");
 app.Run();

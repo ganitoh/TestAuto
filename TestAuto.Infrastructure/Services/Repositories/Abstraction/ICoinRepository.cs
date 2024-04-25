@@ -11,6 +11,7 @@ namespace TestAuto.Infrastructure.Services.Repositories.Abstraction
         Task UnBlockCoinAsync(int coinId);
         Task UpdateCoinCountAsync(int coinId, int count);
         Task UpdateCoinCountDecrementAsync(int coinId);
+        Task UpdateCoinCountDecrementAsync(int dispenserId, int denominationCoin);
         Task UpdateCoinCountIncrementAsync(int coinId);
 
     }

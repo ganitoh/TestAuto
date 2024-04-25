@@ -3,8 +3,116 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .coins button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .coins button:hover {
+            background-color: #45a049;
+        }
+        .drinks img {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .drinks img:hover {
+            transform: scale(1.05);
+        }
+
+        .drinks button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #008CBA;
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .drinks button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .drinks button:hover {
+            background-color: #007AAB;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h2>hello world</h2>
+    <h1>Автомат по продаже напитков</h1>
+    <div class="container">
+        <!-- Панель для внесения суммы -->
+        <div class="section coins">
+            <h2>Внести сумму</h2>
+            <button onclick="insertCoin(1)">1 рубль</button>
+            <button onclick="insertCoin(2)">2 рубля</button>
+            <button onclick="insertCoin(5)">5 рублей</button>
+            <button onclick="insertCoin(10)">10 рублей</button>
+            <div id="totalAmount">Внесенная сумма: 0 рублей</div>
+        </div>
+
+        <!-- Панель выбора напитков -->
+        <div id="drink-section" class="section drinks">
+            <h2>Выберите напиток</h2>
+
+    </div>
+
+    <script src="/scripts/drinkLoad.js"></script>
+    <script src="/scripts/deposit.js"></script>
 </body>
 </html>
