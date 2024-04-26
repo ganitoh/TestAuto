@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using TestAuto.Domain.Models;
+﻿using TestAuto.Domain.Models;
 
 namespace TestAuto.Infrastructure.Services.Repositories.Abstraction
 {
