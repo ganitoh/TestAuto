@@ -23,6 +23,13 @@
             margin-bottom: 20px;
         }
 
+        .drinks{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -59,6 +66,17 @@
             padding: 10px;
         }
 
+        img {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
         input[type="password"] {
             width: calc(100% - 36px);
             padding: 10px;
@@ -74,21 +92,25 @@
 
     <!-- Форма для управления ассортиментом напитков -->
     <h2>Управление ассортиментом напитков</h2>
-    <form id="drinkForm">
+    <form id="drinkForm" action="/admin/drink/add/secrettoken" method="post">
         <label for="drinkName">Название напитка:</label>
-        <input type="text" id="drinkName" name="drinkName" required><br>
+        <input type="text" id="drinkName" name="name" required><br>
 
         <label for="drinkQuantity">Количество:</label>
-        <input type="number" id="drinkQuantity" name="drinkQuantity" required><br>
+        <input type="number" id="drinkQuantity" name="count" required><br>
 
         <label for="drinkPrice">Цена:</label>
-        <input type="number" id="drinkPrice" name="drinkPrice" required><br>
+        <input type="number" id="drinkPrice" name="price" required><br>
 
         <label for="drinkImage">Изображение:</label>
-        <input type="file" id="drinkImage" name="drinkImage" accept="image/*"><br>
+        <input type="file" id="drinkImage" name="file" accept="image/*"><br>
 
         <button type="submit">Добавить напиток</button>
     </form>
+    <div id="drinks" class="drinks">
+        <h2>добавить количество</h2>
+
+    </div>
 
     <!-- Форма для управления монетами в автомате -->
     <h2>Управление монетами в автомате</h2>
@@ -113,4 +135,5 @@
 
         <button type="submit">Изменить монеты</button>
     </form>
+    <script src="/scripts/drinkLoadAdin.js"></script>
 </body>
