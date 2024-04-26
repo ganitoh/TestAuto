@@ -23,14 +23,7 @@
             margin-bottom: 20px;
         }
 
-        .drinks{
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        #drinkForm{
+        .section{
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -99,7 +92,7 @@
 
     <!-- Форма для управления ассортиментом напитков -->
     <h2>Управление ассортиментом напитков</h2>
-    <div id="drinkForm">
+    <div class="section" id="drinkForm">
         <label for="drinkName">Название напитка:</label>
         <input type="text" id="drinkName" name="name" required><br>
 
@@ -114,14 +107,14 @@
 
         <button type="button" id="send">Добавить напиток</button>
     </div>
-    <div id="drinks" class="drinks">
+    <div id="drinks" class="section">
         <h2>добавить количество</h2>
 
     </div>
 
     <!-- Форма для управления монетами в автомате -->
     <h2>Управление монетами в автомате</h2>
-    <div id="coinForm">
+    <div class="section" id="coinForm">
         <label for="coinType">Тип монеты:</label>
         <select id="coinType" name="coinType">
             <option value="1">1 рубль</option>
@@ -133,36 +126,29 @@
 
         <label for="coinQuantity">Количество:</label>
         <input type="number" id="coinQuantity" name="coinQuantity" required><br>
+        <button onclick="updateCountCoint()" type="button">Изменить монеты</button>
+    </div>
 
-        <label for="coinStatus">Статус:</label>
-        <select id="coinStatus" name="coinStatus">
+    <div class="section">
+        <h2>заблокировать/разблокировать монету</h2>
+        <label for="blockCoinType">Тип монеты:</label>
+        <select id="blockcoinType" name="coinType">
+            <option value="1">1 рубль</option>
+            <option value="2">2 рубля</option>
+            <option value="5">5 рублей</option>
+            <option value="10">10 рублей</option>
+            <!-- Другие варианты монет -->
+        </select><br>
+        <select id="blockcoinStatus" name="coinStatus">
             <option value="active">Активная</option>
             <option value="blocked">Заблокированная</option>
         </select><br>
+        <button onclick="blockCoin()" type="button">Изменить монеты</button>
 
-        <button onclick="updateCountCoint()" type="button">Изменить монеты</button>
     </div>
     <script src="/scripts/drinkLoadAdin.js"></script>
     <script src="/scripts/sendDrink.js"></script>
-    <script>
-        async function updateCountCoint(){
-            var count = document.getElementById('coinQuantity').value;
-            var denominationCoin = document.getElementById('coinType').value;
-
-            await fetch('/admin/coin/update-count/secrettoken', {
-                method : 'POST',
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify({
-                    denominationCoin: denominationCoin,
-                    count: count
-                })
-            }).then(respose => {
-                if (respose.ok) {
-                    alert("количество изменено")
-                }
-            });
-        }
-    </script>
-        
+    <script src="/scripts/updateCountCoin.js"></script>  
+    <script src="/scripts/blockUnblockCoin.js"></script>  
     </script>
 </body>

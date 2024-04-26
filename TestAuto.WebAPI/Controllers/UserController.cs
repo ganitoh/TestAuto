@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
-using TestAuto.Application.CQRS.Coins.Queries.GetCointById;
+using TestAuto.Application.CQRS.Drinks.Queries.GetDrinkPrice;
 using TestAuto.Application.Services.Abstraction;
 
 namespace TestAuto.WebAPI.Controllers
@@ -56,7 +56,10 @@ namespace TestAuto.WebAPI.Controllers
             if (HttpContext.Session.Keys.Contains("balance"))
             {
                 var balance = Convert.ToInt32(HttpContext.Session.GetString("balance"));
-                var changeCoin = await _accountService.PayDrinkAndChangeReturn(drinkId, balance);
+                var changeCoin = await _accountService.PayDrinkAndChangeReturn(drinkId,  balance);
+                var priceDrink = await _mediator.Send(new GetDrinkPriceRequest(drinkId));
+                balance -= (int)priceDrink;
+                HttpContext.Session.SetString("balance",balance.ToString()!);
                 return Ok(new {change = changeCoin, drinkid = drinkId});
             }
             else

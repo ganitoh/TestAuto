@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System.Net;
+using TestAuto.Application.Exeptions;
 using TestAuto.Infrastructure.Exceptions;
 
 namespace TestAuto.WebAPI.Middlewares
@@ -29,6 +30,11 @@ namespace TestAuto.WebAPI.Middlewares
                 await BadRequesExceptionHandler(context, ex);
             }
             catch (EntityNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                await BadRequesExceptionHandler(context, ex);
+            }
+            catch (PaymentFailedException ex)
             {
                 _logger.LogWarning(ex.Message);
                 await BadRequesExceptionHandler(context, ex);

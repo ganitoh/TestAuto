@@ -99,10 +99,10 @@
         <!-- Панель для внесения суммы -->
         <div class="section coins">
             <h2>Внести сумму</h2>
-            <button onclick="insertCoin(1)">1 рубль</button>
-            <button onclick="insertCoin(2)">2 рубля</button>
-            <button onclick="insertCoin(5)">5 рублей</button>
-            <button onclick="insertCoin(10)">10 рублей</button>
+            <button id="coin1" onclick="insertCoin(1)">1 рубль</button>
+            <button id="coin2" onclick="insertCoin(2)">2 рубля</button>
+            <button id="coin5" onclick="insertCoin(5)">5 рублей</button>
+            <button id="coin10" onclick="insertCoin(10)">10 рублей</button>
             <div id="totalAmount">Баланс: 0 руб.</div>
         </div>
 
@@ -114,5 +114,6 @@
 
     <script src="/scripts/drinkLoad.js"></script>
     <script src="/scripts/deposit.js"></script>
+    <script src="/scripts/coinLoad.js"></script>
 </body>
 </html>

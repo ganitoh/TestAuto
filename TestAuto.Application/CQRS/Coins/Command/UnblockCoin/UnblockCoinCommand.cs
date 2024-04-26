@@ -4,12 +4,14 @@ namespace TestAuto.Application.CQRS.Coins.Command.UnblockCoin
 {
     public class UnblockCoinCommand : IRequest
     {
-        public int Id { get; set; }
+        public int DenominationCoin { get; set; }
+        public int DispenserId { get; set; } = 1;
         public UnblockCoinCommand() { }
 
-        public UnblockCoinCommand(int id)
+        public UnblockCoinCommand(int denominationCoin, int dispenserId = 1)
         {
-            Id = id;
+            DenominationCoin = denominationCoin;
+            DispenserId = dispenserId;
         }
     }
 }

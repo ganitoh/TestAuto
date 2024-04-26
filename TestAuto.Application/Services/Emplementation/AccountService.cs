@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
-using TestAuto.Application.CQRS.Coins.Command.IncrementCountCoin;
 using TestAuto.Application.CQRS.Coins.Queries.GetAllCoinByDispenser;
+using TestAuto.Application.CQRS.Drinks.Commands.DecremenetCountDrink;
 using TestAuto.Application.CQRS.Drinks.Queries.GetDrinkById;
 using TestAuto.Application.Exeptions;
 using TestAuto.Application.Services.Abstraction;
@@ -25,11 +25,11 @@ namespace TestAuto.Application.Services.Emplementation
 
             if (drink.Count < 1)
                 throw new PaymentFailedException("напитков нет");
-            else if(drink.Price == balance)
+            else if(drink.Price > balance)
                 throw new PaymentFailedException("недостаточно средств");
             else
             {
-                await _mediator.Send(new DecrementCountCoinCommand(drinkId));
+                await _mediator.Send(new DecrementCountDrinkCommand(drinkId));
                 var changeValue = balance - drink.Price;
                 return await CalculateChangeAsync((int)changeValue);
             }
@@ -47,7 +47,7 @@ namespace TestAuto.Application.Services.Emplementation
                 changeValue -= coin.Denomination;
                 coinsChange.Add(coin.Denomination);
 
-                await _mediator.Send(new DecrementCountCoinCommand(coin.Id));
+                await _mediator.Send(new DecrementCountCoinCommand(coin.Denomination));
             }
 
             return coinsChange;

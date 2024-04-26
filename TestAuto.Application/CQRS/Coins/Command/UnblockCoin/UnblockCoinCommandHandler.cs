@@ -16,7 +16,7 @@ namespace TestAuto.Application.CQRS.Coins.Command.UnblockCoin
             UnblockCoinCommand request,
             CancellationToken cancellationToken)
         {
-            await _coinRepository.UnBlockCoinAsync(request.Id);
+            await _coinRepository.UnBlockCoinAsync(request.DenominationCoin, request.DispenserId);
         }
     }
 }

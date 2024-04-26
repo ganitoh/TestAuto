@@ -16,7 +16,7 @@ namespace TestAuto.Application.CQRS.Coins.Command.BlockCoin
             BlockCoinCommand request, 
             CancellationToken cancellationToken)
         {
-            await _coinRepository.BlockCoinAsync(request.Id);
+            await _coinRepository.BlockCoinAsync(request.DenominationCoin,request.DispenserId);
         }
     }
 }

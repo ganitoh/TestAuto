@@ -109,5 +109,33 @@ namespace TestAuto.Infrastructure.Services.Repositories.Emplemenatation
             coin.Count = count;
             await _context.SaveChangesAsync();
         }
+
+        public async Task BlockCoinAsync(int denominationCoin, int dispenserId = 1)
+        {
+            var coin = await _context.Coins
+                .FirstOrDefaultAsync(
+                c => c.DispenserId == dispenserId
+                && c.Denomination == denominationCoin);
+
+            if (coin is null)
+                throw new EntityNotFoundException("монета с таким наминалом не найдена");
+
+            coin.IsBlock = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UnBlockCoinAsync(int denominationCoin, int dispenserId = 1)
+        {
+            var coin = await _context.Coins
+                .FirstOrDefaultAsync(
+                c => c.DispenserId == dispenserId
+                && c.Denomination == denominationCoin);
+
+            if (coin is null)
+                throw new EntityNotFoundException("монета с таким наминалом не найдена");
+
+            coin.IsBlock = false;
+            await _context.SaveChangesAsync();
+        }
     }
 }

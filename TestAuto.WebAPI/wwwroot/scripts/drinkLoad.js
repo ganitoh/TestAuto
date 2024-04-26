@@ -20,10 +20,11 @@ function loadDrinkData(drinksData){
         var pName = document.createElement('p');
         var pPrice = document.createElement('p');
 
-        button.textContent = 'Добавить';
+        button.textContent = 'купить';
         button.onclick = () => { payDrink(drink.id);}
         img.src = drink.relativePathPicture;
         img.alt = 'напиток';
+        img.onclick = ()=>{payDrink(drink.id);}
         pName.textContent = drink.name;
         pPrice.textContent = `цена ${drink.price} руб.`
 
@@ -44,6 +45,11 @@ async function payDrink(drinkId){
         if (response.ok) {
             var responseData = await response.json();
             alert(`ваша сдача ${response.change}`)
+            await showBalance();
+        }
+        else{
+            var responseMessage = await response.json();
+            alert(`${responseMessage.message}`)
         }
     });
 }
