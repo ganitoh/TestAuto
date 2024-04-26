@@ -8,7 +8,7 @@ async function insertCoin(denominationCoin){
             method : 'GET'}).then(async (response) =>{
                 if (response.ok) {
                     var responseBalance = await response.json();
-                    document.getElementById('totalAmount').innerText = `Баланс: ${responseBalance.balance}`;
+                    document.getElementById('totalAmount').innerText = `Баланс: ${responseBalance.balance} руб.`;
                 }
             });                
     }

@@ -95,5 +95,19 @@ namespace TestAuto.Infrastructure.Services.Repositories.Emplemenatation
             coin.Count++;
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateCoinCountAsync(int denominationCoin, int count, int dispenserId)
+        {
+            var coin = await _context.Coins
+                .FirstOrDefaultAsync(
+                c => c.DispenserId == dispenserId
+                && c.Denomination == denominationCoin);
+
+            if (coin is null)
+                throw new EntityNotFoundException("монета с таким наминалом не найдена");
+
+            coin.Count = count;
+            await _context.SaveChangesAsync();
+        }
     }
 }

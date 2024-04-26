@@ -17,7 +17,7 @@ namespace TestAuto.Application.CQRS.Coins.Command.UpdateCountCoin
             UpdateCountCoinCommand request, 
             CancellationToken cancellationToken)
         {
-            await _coinRepository.UpdateCoinCountAsync(request.CoinId, request.Count);
+            await _coinRepository.UpdateCoinCountAsync(request.DenominationCoin, request.Count, 1);
         }
     }
 }

@@ -17,15 +17,18 @@ function loadDrinkData(drinksData){
         var div = document.createElement('div');
         var img = document.createElement('img');
         var button = document.createElement('button');
-        var p = document.createElement('p');
+        var pName = document.createElement('p');
+        var pPrice = document.createElement('p');
 
         button.textContent = 'Добавить';
         button.onclick = () => { payDrink(drink.id);}
         img.src = drink.relativePathPicture;
         img.alt = 'напиток';
-        p.textContent = drink.name;
+        pName.textContent = drink.name;
+        pPrice.textContent = `цена ${drink.price} руб.`
 
-        div.appendChild(p);
+        div.appendChild(pName);
+        div.appendChild(pPrice);
         div.appendChild(img);
         div.appendChild(button);
 

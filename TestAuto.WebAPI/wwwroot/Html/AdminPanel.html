@@ -30,6 +30,13 @@
             margin-bottom: 20px;
         }
 
+        #drinkForm{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -92,7 +99,7 @@
 
     <!-- Форма для управления ассортиментом напитков -->
     <h2>Управление ассортиментом напитков</h2>
-    <form id="drinkForm" action="/admin/drink/add/secrettoken" method="post">
+    <div id="drinkForm">
         <label for="drinkName">Название напитка:</label>
         <input type="text" id="drinkName" name="name" required><br>
 
@@ -105,8 +112,8 @@
         <label for="drinkImage">Изображение:</label>
         <input type="file" id="drinkImage" name="file" accept="image/*"><br>
 
-        <button type="submit">Добавить напиток</button>
-    </form>
+        <button type="button" id="send">Добавить напиток</button>
+    </div>
     <div id="drinks" class="drinks">
         <h2>добавить количество</h2>
 
@@ -114,7 +121,7 @@
 
     <!-- Форма для управления монетами в автомате -->
     <h2>Управление монетами в автомате</h2>
-    <form id="coinForm">
+    <div id="coinForm">
         <label for="coinType">Тип монеты:</label>
         <select id="coinType" name="coinType">
             <option value="1">1 рубль</option>
@@ -133,7 +140,29 @@
             <option value="blocked">Заблокированная</option>
         </select><br>
 
-        <button type="submit">Изменить монеты</button>
-    </form>
+        <button onclick="updateCountCoint()" type="button">Изменить монеты</button>
+    </div>
     <script src="/scripts/drinkLoadAdin.js"></script>
+    <script src="/scripts/sendDrink.js"></script>
+    <script>
+        async function updateCountCoint(){
+            var count = document.getElementById('coinQuantity').value;
+            var denominationCoin = document.getElementById('coinType').value;
+
+            await fetch('/admin/coin/update-count/secrettoken', {
+                method : 'POST',
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify({
+                    denominationCoin: denominationCoin,
+                    count: count
+                })
+            }).then(respose => {
+                if (respose.ok) {
+                    alert("количество изменено")
+                }
+            });
+        }
+    </script>
+        
+    </script>
 </body>

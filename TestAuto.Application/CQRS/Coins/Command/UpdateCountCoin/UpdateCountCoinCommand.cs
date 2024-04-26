@@ -4,13 +4,13 @@ namespace TestAuto.Application.CQRS.Coins.Command.UpdateCountCoin
 {
     public class UpdateCountCoinCommand : IRequest
     {
-        public int CoinId { get; set; }
+        public int DenominationCoin { get; set; }
         public int Count { get; set; }
         public UpdateCountCoinCommand() { }
 
-        public UpdateCountCoinCommand(int coinId, int count)
+        public UpdateCountCoinCommand(int denominationCoin, int count)
         {
-            CoinId = coinId;
+            DenominationCoin = denominationCoin;
             Count = count;
         }
     }
