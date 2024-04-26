@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestAuto.Application.CQRS.Drinks.Commands.CreateDrink;
 using TestAuto.Application.CQRS.Drinks.Commands.DeleteDrink;
 using TestAuto.Application.CQRS.Drinks.Commands.UpdateDrink;
+using TestAuto.Application.CQRS.Drinks.Commands.UpdateDrinkCount;
 using TestAuto.WebAPI.Contracts;
 
 namespace TestAuto.WebAPI.Areas.Admin.Controllers
@@ -41,6 +42,13 @@ namespace TestAuto.WebAPI.Areas.Admin.Controllers
 
         [HttpPost("update/{token}")]
         public async Task<IActionResult> UpdateDrinkInfo([FromBody] UpdateDrinkCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPost("update-count/{token}")]
+        public async Task<IActionResult> UpdateCountDrink([FromBody] UpdateDrinkCountComamnd command)
         {
             await _mediator.Send(command);
             return Ok();

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Components;
 using TestAuto.Application.CQRS.Coins.Command.DecrementCountCoin;
 using TestAuto.Application.CQRS.Coins.Queries.GetAllCoinByDispenser;
 using TestAuto.Application.CQRS.Drinks.Commands.DecremenetCountDrink;
@@ -42,11 +43,22 @@ namespace TestAuto.Application.Services.Emplementation
 
             while (changeValue > 0)
             {
-                Coin coin = coinsDispenser.FirstOrDefault(c=>c.Count > 0) 
-                    ?? throw new EntityNotFoundException("coin not found");
+                Coin? coin = null;
+
+                if (changeValue >= 10)
+                    coin = coinsDispenser.FirstOrDefault(c => c.Count > 0 && c.Denomination ==10)!;
+                else if (changeValue >= 5 && changeValue < 10)
+                    coin = coinsDispenser.FirstOrDefault(c => c.Count > 0 && c.Denomination == 5)!;
+                else if (changeValue >= 2 && changeValue < 5)
+                    coin = coinsDispenser.FirstOrDefault(c => c.Count > 0 && c.Denomination == 2)!;
+                else if (changeValue == 1 )
+                    coin = coinsDispenser.FirstOrDefault(c => c.Count > 0 && c.Denomination == 1)!;
+
+                if (coin is null)
+                    throw new EntityNotFoundException("монеты не найдены");
+
                 changeValue -= coin.Denomination;
                 coinsChange.Add(coin.Denomination);
-
                 await _mediator.Send(new DecrementCountCoinCommand(coin.Denomination));
             }
 

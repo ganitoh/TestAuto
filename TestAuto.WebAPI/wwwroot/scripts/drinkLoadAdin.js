@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded",async () =>{
     }
 });
 
-function loadDrinkData(drinksData){
+ function loadDrinkData(drinksData){
     var contentDiv = document.getElementById("drinks");
     drinksData.forEach(drink => {
         //create elements
@@ -24,7 +24,11 @@ function loadDrinkData(drinksData){
         pInputName.textContent = 'колличество';
         countInput.type = 'number';
         button.textContent = 'Добавить';
-        //button.onclick = () => { payDrink(drink.id);}
+        button.onclick = async () => 
+        {
+            var count = countInput.value;
+            await updateDrinkCount(count,drink.id);
+        }
         img.src = drink.relativePathPicture;
         img.alt = 'напиток';
         pname.textContent = drink.name;
@@ -36,5 +40,20 @@ function loadDrinkData(drinksData){
         div.appendChild(button);
 
         contentDiv.appendChild(div);
+    });
+}
+
+async function updateDrinkCount(count,drinkId){
+    await fetch('/admin/drink/update-count/secrettoken',{
+        method: 'POST',
+        headers : {'Content-Type' : 'application/json'},
+        body : JSON.stringify({
+            drinkId:drinkId,
+            count: count
+        })
+    }).then(respose => {
+        if (respose.ok) {
+            alert('успешно');
+        }
     });
 }

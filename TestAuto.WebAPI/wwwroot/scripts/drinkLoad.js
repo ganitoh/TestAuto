@@ -44,7 +44,9 @@ async function payDrink(drinkId){
     }).then(async (response) => {
         if (response.ok) {
             var responseData = await response.json();
-            alert(`ваша сдача ${response.change}`)
+            var responseMessage = '';
+            responseData.change.forEach(coin =>{ responseMessage += `${coin};` });
+            alert(`ваша сдача ${responseMessage}`)
             await showBalance();
         }
         else{
